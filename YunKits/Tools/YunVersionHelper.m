@@ -26,16 +26,20 @@
 }
 
 + (BOOL)shouldUpdate:(NSString *)serverVersion {
-    NSArray<NSString *> *curA = [self versionArr:[self appVersion]];
-    NSArray<NSString *> *srvA = [self versionArr:serverVersion];
+    return [self compareOldVersion:[self appVersion] newVersion:serverVersion];
+}
 
++ (BOOL) compareOldVersion:(NSString *) oldVersion newVersion:(NSString *) newVersion {
+    NSArray<NSString *> *curA = [self versionArr:oldVersion];
+    NSArray<NSString *> *srvA = [self versionArr:newVersion];
+    
     if (curA.count != srvA.count) {
         return NO;
     }
-
+    
     for (int i = 0; i < curA.count; ++i) {
         if (![YunValueVerifier isPureInt:curA[i]] || ![YunValueVerifier isPureInt:srvA[i]]) {return NO;}
-
+        
         NSInteger curV = [curA[i] integerValue];
         NSInteger serV = [srvA[i] integerValue];
         if (curV < serV) {
@@ -48,8 +52,9 @@
             return NO;
         }
     }
-
+    
     return NO;
+    
 }
 
 + (void)checkAppStUpdate:(YunVersionHelperBlock)block {

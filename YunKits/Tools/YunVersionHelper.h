@@ -18,6 +18,8 @@ typedef void(^YunVersionHelperBlock)(NSString *curVer, NSString *appStVer, NSStr
 /// 2.0.0 比较 1.0.0
 + (BOOL)shouldUpdate:(NSString *)serverVersion;
 
++ (BOOL) compareOldVersion:(NSString *) oldVersion newVersion:(NSString *) newVersion;
+
 /// 默认bundleId
 + (void)checkAppStUpdate:(YunVersionHelperBlock)block;
 
