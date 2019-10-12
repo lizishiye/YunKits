@@ -5,9 +5,9 @@
 
 #import "YunViewController.h"
 #import "YunValueVerifier.h"
+#import "YunConfig.h"
 
 @interface YunViewController () {
-    UIImageView *_nagBtmLine;
 }
 
 @property (nonatomic, strong) UIBarButtonItem *noneLeftItem;
@@ -243,23 +243,26 @@
 }
 
 - (void)setNagBottomLineHideStatus:(BOOL)hide {
+    UIImage * navShadowImg = [UIImage imageNamed:YunConfig.instance.defNagShadowImg];
     if (hide) {
         self.navigationController.navigationBar.shadowImage = UIImage.new;
     } else {
-        self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"nav_bottom_shadow"];
+        self.navigationController.navigationBar.shadowImage = navShadowImg;
     }
-    //    if (_nagBtmLine == nil) {
-    //        _nagBtmLine = [self findNagBtmLine:self.navigationController.navigationBar];
-    //    }
-    //
-    //    if (_nagBtmLine) {
-    //        _nagBtmLine.hidden = hide;
-    //    }
+    //适配iOS13：导航栏底部阴影不显示
+    UIImageView * imgView = [self findNagBtmLine:self.navigationController.navigationBar];
+    if (imgView) {
+        CGSize size = navShadowImg.size;
+        
+        CGRect rect = imgView.frame;
+        rect.size.height = size.height;
+        imgView.frame = rect;
+    }
+
 }
 
 - (UIImageView *)findNagBtmLine:(UIView *)view {
-    //    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
-    if ([view isKindOfClass:UIImageView.class]) {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
         return (UIImageView *) view;
     }
     for (UIView *subview in view.subviews) {

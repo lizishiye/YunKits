@@ -97,6 +97,12 @@
 // 导航栏，item 宽度
 @property (nonatomic, assign) CGFloat nagItemWidth;
 
+/// 默认的返回按钮图片名，默认：nag_back
+@property (nonatomic, copy) NSString *defNagBackItemImg;
+
+/// 默认的导航栏底部线图片名，默认：nav_bottom_shadow
+@property (nonatomic, copy) NSString *defNagShadowImg;
+
 #pragma mark - UIImage 压缩参数
 
 // 最大边
