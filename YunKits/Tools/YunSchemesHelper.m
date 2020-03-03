@@ -15,11 +15,7 @@
 + (void)callWeChat {
     if ([self isWeChatInstalled]) {
         NSString *weChatUrl = [NSString stringWithFormat:@"weixin://"];
-        UIWebView *webview = [[UIWebView alloc] initWithFrame:CGRectZero];
-        [[UIApplication sharedApplication].keyWindow addSubview:webview];
-        NSURL *url = [NSURL URLWithString:weChatUrl];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [webview loadRequest:request];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:weChatUrl]];
     }
 }
 
